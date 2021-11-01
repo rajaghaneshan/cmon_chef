@@ -24,29 +24,34 @@ class _HomePageState extends State<HomePage> {
         title: appBarTitleText(),
       ),
       body: SingleChildScrollView(
-        controller: _scrollController,
+        // controller: _scrollController,
         child: Padding(
           padding:
               EdgeInsets.symmetric(horizontal: size.width * 0.02, vertical: 20),
           child: Column(
             children: [
-              FutureBuilder<RandomRecipesResponse>(
-                  future: RandomRecipesDataSourceImpl()
-                      .getRandomRecipes(10, 'indian'),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData && snapshot.data!.recipes.length > 0) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          controller: _scrollController,
-                          itemCount: snapshot.data!.recipes.length,
-                          itemBuilder: (BuildContext context, index) {
-                            return RecipeOverviewCard(
-                              response: snapshot.data!.recipes[index],
-                            );
-                          });
-                    }
-                    return LoadingIndicator();
-                  }),
+              // FutureBuilder<RandomRecipesResponse>(
+              //     future: RandomRecipesDataSourceImpl()
+              //         .getRandomRecipes(10, 'indian'),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.hasData && snapshot.data!.recipes.length > 0) {
+              //         return
+              ListView.builder(
+                shrinkWrap: true,
+                controller: _scrollController,
+                itemCount:
+                    // snapshot.data!.recipes.length
+                    10,
+                itemBuilder: (BuildContext context, index) {
+                  return Container();
+                  // RecipeOverviewCard(
+                  //   response: snapshot.data!.recipes[index],
+                  // );
+                  // });
+                  // }
+                  // return LoadingIndicator();
+                },
+              ),
             ],
           ),
         ),
@@ -93,21 +98,18 @@ class RecipeOverviewCard extends StatelessWidget {
 
     return Container(
       height: 150,
-      
       margin: EdgeInsets.symmetric(vertical: 8.0),
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary,
-            offset: Offset(0,20),
-            blurRadius: 30,
-
-          ),
-        ]
-      ),
+          borderRadius: BorderRadius.circular(10.0),
+          color: AppColors.white,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary,
+              offset: Offset(0, 20),
+              blurRadius: 30,
+            ),
+          ]),
       child: Row(
         children: [
           Expanded(

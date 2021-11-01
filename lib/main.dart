@@ -1,10 +1,18 @@
 import 'package:cmon_chef/core/app_colors.dart';
+import 'package:cmon_chef/features/splash_screen/splash_screen.dart';
+import 'package:cmon_chef/home_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import 'features/home/presentation/pages/home_page.dart';
+import 'home.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  Get.put(HomeController());
   runApp(const MyApp());
 }
 
@@ -25,11 +33,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        fontFamily: 'ClementePDa',
         textTheme: TextTheme(),
-        primarySwatch: Colors.blue,
+        primaryColor: AppColors.primary,
       ),
-      home: const HomePage(),
+      home: const SplashScreen(),
     );
   }
 }
