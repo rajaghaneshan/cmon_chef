@@ -53,34 +53,34 @@ class _HomePageState extends State<HomePage>
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              // FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
-              //     future: RandomRecipeRepoImpl().getRandomRecipes('indian'),
-              //     builder: (context, snapshot) {
-              //       if (!snapshot.hasData) {
-              //         return LoadingIndicator();
-              //       }
-              //       return snapshot.data!.fold(
-              //         (l) {
-              //           return Text('API error');
-              //         },
-              //         (r) {
-              //           return SizedBox(
-              //             height: 150,
-              //             child: ListView.builder(
-              //               shrinkWrap: true,
-              //               controller: _scrollController,
-              //               scrollDirection: Axis.horizontal,
-              //               itemCount: snapshot.data!.length(),
-              //               itemBuilder: (BuildContext context, index) {
-              //                 return recipeCard(
-              //                   r.recipes[index],
-              //                 );
-              //               },
-              //             ),
-              //           );
-              //         },
-              //       );
-              //     }),
+              FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
+                  future: RandomRecipeRepoImpl().getRandomRecipes('indian'),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return LoadingIndicator();
+                    }
+                    return snapshot.data!.fold(
+                      (l) {
+                        return Text('API error');
+                      },
+                      (r) {
+                        return SizedBox(
+                          height: 150,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: r.recipes.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return recipeCard(
+                                r.recipes[index],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -88,34 +88,34 @@ class _HomePageState extends State<HomePage>
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              // FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
-              //     future: RandomRecipeRepoImpl().getRandomRecipes('snack'),
-              //     builder: (context, snapshot) {
-              //       if (!snapshot.hasData) {
-              //         return LoadingIndicator();
-              //       }
-              //       return snapshot.data!.fold(
-              //         (l) {
-              //           return Text('API error');
-              //         },
-              //         (r) {
-              //           return SizedBox(
-              //             height: 150,
-              //             child: ListView.builder(
-              //               shrinkWrap: true,
-              //               controller: _scrollController,
-              //               scrollDirection: Axis.horizontal,
-              //               itemCount: snapshot.data!.length(),
-              //               itemBuilder: (BuildContext context, index) {
-              //                 return recipeCard(
-              //                   r.recipes[index],
-              //                 );
-              //               },
-              //             ),
-              //           );
-              //         },
-              //       );
-              //     }),
+              FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
+                  future: RandomRecipeRepoImpl().getRandomRecipes('snack'),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return LoadingIndicator();
+                    }
+                    return snapshot.data!.fold(
+                      (l) {
+                        return Text('API error');
+                      },
+                      (r) {
+                        return SizedBox(
+                          height: 150,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: r.recipes.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return recipeCard(
+                                r.recipes[index],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
@@ -123,35 +123,35 @@ class _HomePageState extends State<HomePage>
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
               ),
-              // FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
-              //   future: RandomRecipeRepoImpl().getRandomRecipes(''),
-              //   builder: (context, snapshot) {
-              //     if (!snapshot.hasData) {
-              //       return LoadingIndicator();
-              //     }
-              //     return snapshot.data!.fold(
-              //       (l) {
-              //         return Text('API error');
-              //       },
-              //       (r) {
-              //         return SizedBox(
-              //           height: 150,
-              //           child: ListView.builder(
-              //             shrinkWrap: true,
-              //             controller: _scrollController,
-              //             scrollDirection: Axis.horizontal,
-              //             itemCount: snapshot.data!.length(),
-              //             itemBuilder: (BuildContext context, index) {
-              //               return recipeCard(
-              //                 r.recipes[index],
-              //               );
-              //             },
-              //           ),
-              //         );
-              //       },
-              //     );
-              //   },
-              // ),
+              FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
+                future: RandomRecipeRepoImpl().getRandomRecipes(''),
+                builder: (context, snapshot) {
+                  if (!snapshot.hasData) {
+                    return LoadingIndicator();
+                  }
+                  return snapshot.data!.fold(
+                    (l) {
+                      return Text('API error');
+                    },
+                    (r) {
+                      return SizedBox(
+                        height: 150,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          controller: _scrollController,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: r.recipes.length,
+                          itemBuilder: (BuildContext context, index) {
+                            return recipeCard(
+                              r.recipes[index],
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),
@@ -176,9 +176,45 @@ class _HomePageState extends State<HomePage>
         margin: EdgeInsets.all(6.0),
         // height: 200,
         width: 100,
+        alignment: Alignment.bottomLeft,
         decoration: BoxDecoration(
-          color: Colors.orange,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(1, 1),
+              blurRadius: 5,
+              color: Colors.grey,
+            ),
+          ],
+          image: DecorationImage(
+            alignment: Alignment.topCenter,
+            image: NetworkImage(response.image),
+            fit: BoxFit.fitWidth,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                response.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                '${response.readyInMinutes} mins',
+              ),
+            ],
+          ),
         ),
       ),
     );

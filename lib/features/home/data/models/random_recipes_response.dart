@@ -91,11 +91,11 @@ class Recipe {
   dynamic imageType;
   dynamic summary;
   List<dynamic> cuisines;
-  List<dynamic> dishTypes;
-  List<dynamic> diets;
+  List<String> dishTypes;
+  List<String> diets;
   List<dynamic> occasions;
   dynamic instructions;
-  List<AnalyzedInstruction> analyzedInstructions;
+  List<dynamic> analyzedInstructions;
   dynamic originalId;
   dynamic spoonacularSourceUrl;
 
@@ -130,13 +130,12 @@ class Recipe {
         imageType: json["imageType"],
         summary: json["summary"],
         cuisines: List<String>.from(json["cuisines"].map((x) => x)),
-        dishTypes: List<dynamic>.from(json["dishTypes"].map((x) => x)),
+        dishTypes: List<String>.from(json["dishTypes"].map((x) => x)),
         diets: List<String>.from(json["diets"].map((x) => x)),
         occasions: List<dynamic>.from(json["occasions"].map((x) => x)),
         instructions: json["instructions"],
-        analyzedInstructions: List<AnalyzedInstruction>.from(
-            json["analyzedInstructions"]
-                .map((x) => AnalyzedInstruction.fromJson(x))),
+        analyzedInstructions:
+            List<dynamic>.from(json["analyzedInstructions"].map((x) => x)),
         originalId: json["originalId"],
         spoonacularSourceUrl: json["spoonacularSourceUrl"],
       );
@@ -182,108 +181,108 @@ class Recipe {
       };
 }
 
-class AnalyzedInstruction {
-  AnalyzedInstruction({
-    required this.name,
-    required this.steps,
-  });
+// class AnalyzedInstruction {
+//   AnalyzedInstruction({
+//     required this.name,
+//     required this.steps,
+//   });
 
-  dynamic name;
-  List<Step> steps;
+//   dynamic name;
+//   List<Step> steps;
 
-  factory AnalyzedInstruction.fromJson(Map<String, dynamic> json) =>
-      AnalyzedInstruction(
-        name: json["name"],
-        steps: List<Step>.from(json["steps"].map((x) => Step.fromJson(x))),
-      );
+//   factory AnalyzedInstruction.fromJson(Map<String, dynamic> json) =>
+//       AnalyzedInstruction(
+//         name: json["name"],
+//         steps: List<Step>.from(json["steps"].map((x) => Step.fromJson(x))),
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "steps": List<dynamic>.from(steps.map((x) => x.toJson())),
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "name": name,
+//         "steps": List<dynamic>.from(steps.map((x) => x.toJson())),
+//       };
+// }
 
-class Step {
-  Step({
-    required this.number,
-    required this.step,
-    required this.ingredients,
-    required this.equipment,
-    required this.length,
-  });
+// class Step {
+//   Step({
+//     required this.number,
+//     required this.step,
+//     required this.ingredients,
+//     required this.equipment,
+//     required this.length,
+//   });
 
-  dynamic number;
-  dynamic step;
-  List<Ent> ingredients;
-  List<Ent> equipment;
-  Length? length;
+//   dynamic number;
+//   dynamic step;
+//   List<Ent> ingredients;
+//   List<Ent> equipment;
+//   Length? length;
 
-  factory Step.fromJson(Map<String, dynamic> json) => Step(
-        number: json["number"],
-        step: json["step"],
-        ingredients:
-            List<Ent>.from(json["ingredients"].map((x) => Ent.fromJson(x))),
-        equipment:
-            List<Ent>.from(json["equipment"].map((x) => Ent.fromJson(x))),
-        length: json["length"] == null ? null : Length.fromJson(json["length"]),
-      );
+//   factory Step.fromJson(Map<String, dynamic> json) => Step(
+//         number: json["number"],
+//         step: json["step"],
+//         ingredients:
+//             List<Ent>.from(json["ingredients"].map((x) => Ent.fromJson(x))),
+//         equipment:
+//             List<Ent>.from(json["equipment"].map((x) => Ent.fromJson(x))),
+//         length: json["length"] == null ? null : Length.fromJson(json["length"]),
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "number": number,
-        "step": step,
-        "ingredients": List<dynamic>.from(ingredients.map((x) => x.toJson())),
-        "equipment": List<dynamic>.from(equipment.map((x) => x.toJson())),
-        "length": length == null ? null : length!.toJson(),
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "number": number,
+//         "step": step,
+//         "ingredients": List<dynamic>.from(ingredients.map((x) => x.toJson())),
+//         "equipment": List<dynamic>.from(equipment.map((x) => x.toJson())),
+//         "length": length == null ? null : length!.toJson(),
+//       };
+// }
 
-class Ent {
-  Ent({
-    required this.id,
-    required this.name,
-    required this.localizedName,
-    required this.image,
-  });
+// class Ent {
+//   Ent({
+//     required this.id,
+//     required this.name,
+//     required this.localizedName,
+//     required this.image,
+//   });
 
-  dynamic id;
-  dynamic name;
-  dynamic localizedName;
-  dynamic image;
+//   dynamic id;
+//   dynamic name;
+//   dynamic localizedName;
+//   dynamic image;
 
-  factory Ent.fromJson(Map<String, dynamic> json) => Ent(
-        id: json["id"],
-        name: json["name"],
-        localizedName: json["localizedName"],
-        image: json["image"],
-      );
+//   factory Ent.fromJson(Map<String, dynamic> json) => Ent(
+//         id: json["id"],
+//         name: json["name"],
+//         localizedName: json["localizedName"],
+//         image: json["image"],
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "localizedName": localizedName,
-        "image": image,
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "id": id,
+//         "name": name,
+//         "localizedName": localizedName,
+//         "image": image,
+//       };
+// }
 
-class Length {
-  Length({
-    required this.number,
-    required this.unit,
-  });
+// class Length {
+//   Length({
+//     required this.number,
+//     required this.unit,
+//   });
 
-  dynamic number;
-  dynamic unit;
+//   dynamic number;
+//   dynamic unit;
 
-  factory Length.fromJson(Map<String, dynamic> json) => Length(
-        number: json["number"],
-        unit: json["unit"],
-      );
+//   factory Length.fromJson(Map<String, dynamic> json) => Length(
+//         number: json["number"],
+//         unit: json["unit"],
+//       );
 
-  Map<String, dynamic> toJson() => {
-        "number": number,
-        "unit": unit,
-      };
-}
+//   Map<String, dynamic> toJson() => {
+//         "number": number,
+//         "unit": unit,
+//       };
+// }
 
 class ExtendedIngredient {
   ExtendedIngredient({

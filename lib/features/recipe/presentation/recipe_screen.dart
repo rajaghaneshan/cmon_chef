@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmon_chef/core/app_colors.dart';
+import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/widgets/back_button.dart';
 import 'package:cmon_chef/features/home/data/models/random_recipes_response.dart';
+import 'package:cmon_chef/features/recipe/data/models/offline_recipe.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class RecipeScreen extends StatefulWidget {
   final Recipe recipe;
@@ -17,13 +20,17 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+  late Box box;
   CollectionReference wishlist = FirebaseFirestore.instance
       .collection('users')
       .doc(homeController.currentUser.value!.id)
       .collection('wishlist');
   bool isWishlisted = false;
+  bool isOffline = false;
+
   @override
   void initState() {
+    box = Hive.box(recipeBox);
     print('recipe ${widget.recipe.id}');
     checkRecipeInFirestore();
     super.initState();
@@ -36,6 +43,31 @@ class _RecipeScreenState extends State<RecipeScreen> {
         isWishlisted = true;
       });
     }
+  }
+
+  addRecipeOffline(Recipe recipe) {
+    box.add(
+      Offlinerecipe(
+        id: recipe.id,
+        title: recipe.title,
+        readyInMinutes: recipe.readyInMinutes,
+        servings: recipe.servings,
+        sourceUrl: recipe.sourceUrl,
+        image: recipe.image,
+        imageType: recipe.imageType,
+        summary: recipe.summary,
+        cuisines: recipe.cuisines,
+        dishTypes: recipe.dishTypes,
+        diets: recipe.diets,
+        occasions: recipe.occasions,
+        instructions: recipe.instructions,
+        analyzedInstructions: recipe.analyzedInstructions,
+        originalId: recipe.originalId,
+      ),
+    );
+    setState(() {
+      isOffline = true;
+    });
   }
 
   addRecipeToWishlist() async {
@@ -122,10 +154,17 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                     ),
                             ),
                             IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.download_outlined,
-                              ),
+                              onPressed: () {
+                                addRecipeOffline(widget.recipe);
+                              },
+                              icon: isOffline
+                                  ? Icon(
+                                      Icons.download_done_rounded,
+                                      color: Colors.green,
+                                    )
+                                  : Icon(
+                                      Icons.download_outlined,
+                                    ),
                             ),
                           ],
                         ),
@@ -142,4 +181,3 @@ class _RecipeScreenState extends State<RecipeScreen> {
     );
   }
 }
-

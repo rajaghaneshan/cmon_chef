@@ -121,7 +121,11 @@ class _WishlistScreenState extends State<WishlistScreen>
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text('Title ${data['title']}'),
+              child: Text(
+                'Title ${data['title']}',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
             )
           ],
         ),
