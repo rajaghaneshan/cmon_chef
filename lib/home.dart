@@ -1,5 +1,7 @@
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/controller.dart';
+import 'package:cmon_chef/features/network/GetX/network_controller.dart';
+import 'package:cmon_chef/features/network/presentation/offline_screen.dart';
 import 'package:cmon_chef/features/profile/presentation/profile_screen.dart';
 import 'package:cmon_chef/features/search/presentation/search_screen.dart';
 import 'package:cmon_chef/features/wishlist/presentation/wishlist_screen.dart';
@@ -16,6 +18,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final NetworkController _networkController = Get.find<NetworkController>();
   @override
   void initState() {
     homeController.selectedIndex.value = 0;
@@ -24,50 +27,54 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: PageView(
-          controller: homeController.pageController,
-          onPageChanged: homeController.onPageChanged,
-          children: [
-            HomePage(),
-            SearchScreen(),
-            WishlistScreen(),
-            ProfileScreen(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          currentIndex: homeController.selectedIndex.value,
-          onTap: homeController.onTap,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: AppColors.white,
-          selectedItemColor: AppColors.primary,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.restaurant_menu,
+    return GetBuilder<NetworkController>(builder: (context) {
+      return _networkController.connectionType == 0
+          ? OfflineScreen()
+          : Scaffold(
+              body: SafeArea(
+                child: PageView(
+                  controller: homeController.pageController,
+                  onPageChanged: homeController.onPageChanged,
+                  children: [
+                    HomePage(),
+                    SearchScreen(),
+                    WishlistScreen(),
+                    ProfileScreen(),
+                  ],
                 ),
-                label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.search,
+              ),
+              bottomNavigationBar: Obx(
+                () => BottomNavigationBar(
+                  currentIndex: homeController.selectedIndex.value,
+                  onTap: homeController.onTap,
+                  type: BottomNavigationBarType.fixed,
+                  backgroundColor: AppColors.white,
+                  selectedItemColor: AppColors.primary,
+                  items: [
+                    BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.restaurant_menu,
+                        ),
+                        label: 'Home'),
+                    BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.search,
+                        ),
+                        label: 'Search'),
+                    BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.favorite_outline,
+                        ),
+                        label: 'Wishlist'),
+                    BottomNavigationBarItem(
+                        icon: Icon(
+                          Icons.account_circle_outlined,
+                        ),
+                        label: 'Me')
+                  ],
                 ),
-                label: 'Search'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.favorite_outline,
-                ),
-                label: 'Wishlist'),
-            BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.account_circle_outlined,
-                ),
-                label: 'Me')
-          ],
-        ),
-      ),
-    );
+              ),
+            );
+    });
   }
 }

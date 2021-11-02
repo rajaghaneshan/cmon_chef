@@ -12,13 +12,12 @@ class RandomRecipesDataSourceImpl implements RandomRecipesDataSource {
   @override
   Future<RandomRecipesResponse> getRandomRecipes(
       int length, String tags) async {
-    // TODO: implement getRandomRecipes
     var client = http.Client();
     String url =
         '$BASE_URL/recipes/random?limitLicense=true&tags=$tags&number=$length&apiKey=$apiKey';
 
     try {
-      var response = await http.get(Uri.parse(url));
+      var response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);

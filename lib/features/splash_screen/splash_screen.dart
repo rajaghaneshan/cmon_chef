@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
@@ -18,14 +17,30 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
   bool isAuth = false;
   final usersRef = FirebaseFirestore.instance.collection('users');
- 
+
   final timestamp = DateTime.now();
   GoogleSignInAccount? currentUser;
   @override
   void initState() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+    // _animation = CurvedAnimation(
+    //   parent: _animationController,
+    //   curve: Curves.easeIn,
+    // );
+    _animation = Tween(end: 1.0, begin: 0.0).animate(_animationController);
+
+    Future.delayed(Duration(seconds: 1), () {
+      _animationController.forward().then((value) {});
+    });
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account);
     }, onError: (err) {
@@ -36,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }).catchError((err) {
       print('Error signing in: $err');
     });
+
     super.initState();
   }
 
@@ -43,15 +59,17 @@ class _SplashScreenState extends State<SplashScreen> {
     if (account != null) {
       homeController.currentUser.value = googleSignIn.currentUser;
       await createUserInFirestore();
-      setState(() {
-        isAuth = true;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Home(),
-          ),
-        );
-      });
+      if (mounted) {
+        setState(() {
+          isAuth = true;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Home(),
+            ),
+          );
+        });
+      }
     } else {
       setState(() {
         isAuth = false;
@@ -91,66 +109,69 @@ class _SplashScreenState extends State<SplashScreen> {
         height: size.height,
         width: double.infinity,
         color: AppColors.primary,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: size.height * 0.05,
-                ),
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      TextSpan(text: 'C'),
-                      TextSpan(
-                        text: '\'',
-                        style: TextStyle(
-                          color: AppColors.accent,
+        child: FadeTransition(
+          opacity: _animation,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: size.height * 0.05,
+                  ),
+                  RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      children: [
+                        TextSpan(text: 'C'),
+                        TextSpan(
+                          text: '\'',
+                          style: TextStyle(
+                            color: AppColors.accent,
+                          ),
                         ),
+                        TextSpan(
+                          text: 'mon',
+                        ),
+                      ],
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 80,
+                        fontFamily: 'ClementePDa',
+                        fontWeight: FontWeight.w600,
                       ),
-                      TextSpan(
-                        text: 'mon',
-                      ),
-                    ],
+                    ),
+                  ),
+                  Text(
+                    'Chef',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 80,
-                      fontFamily: 'ClementePDa',
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                ),
-                Text(
-                  'Chef',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 80,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              bottom: size.height * 0.1,
-              child: InkWell(
-                onTap: () {
-                  login();
-                },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(25),
-                  child: Image.asset(
-                    'assets/google_sign_in.png',
-                    height: 50,
-                    fit: BoxFit.cover,
+                ],
+              ),
+              Positioned(
+                bottom: size.height * 0.1,
+                child: InkWell(
+                  onTap: () {
+                    login();
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(25),
+                    child: Image.asset(
+                      'assets/google_sign_in.png',
+                      height: 50,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

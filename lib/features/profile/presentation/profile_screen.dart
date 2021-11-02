@@ -15,6 +15,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
@@ -64,7 +65,23 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                 );
               },
-              child: Text('Log out'),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.logout,
+                    color: Colors.red,
+                  ),
+                  Text(
+                    ' Log out',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],

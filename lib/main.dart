@@ -1,16 +1,21 @@
 import 'package:cmon_chef/core/app_colors.dart';
+import 'package:cmon_chef/core/app_constants.dart';
+import 'package:cmon_chef/features/network/network_binding.dart';
 import 'package:cmon_chef/features/splash_screen/splash_screen.dart';
 import 'package:cmon_chef/home_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/adapters.dart';
 
-import 'features/home/presentation/pages/home_page.dart';
-import 'home.dart';
+import 'features/recipe/data/models/offline_recipe.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(OfflinerecipeAdapter());
+  await Hive.openBox(recipeBox);
   await Firebase.initializeApp();
   Get.put(HomeController());
   runApp(const MyApp());
@@ -30,8 +35,9 @@ class MyApp extends StatelessWidget {
         systemNavigationBarIconBrightness: Brightness.light,
       ),
     );
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
+      initialBinding: NetworkBinding(),
       theme: ThemeData(
         textTheme: TextTheme(),
         primaryColor: AppColors.primary,
