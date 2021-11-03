@@ -1,4 +1,5 @@
 import 'package:cmon_chef/core/app_colors.dart';
+import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/error/failures.dart';
 import 'package:cmon_chef/core/widgets/appbar_title.dart';
@@ -54,7 +55,7 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
-                  future: RandomRecipeRepoImpl().getRandomRecipes('indian'),
+                  future: RandomRecipeRepoImpl().getRandomRecipes('indian', 5),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return LoadingIndicator();
@@ -89,7 +90,7 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
-                  future: RandomRecipeRepoImpl().getRandomRecipes('snack'),
+                  future: RandomRecipeRepoImpl().getRandomRecipes('snack', 5),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
                       return LoadingIndicator();
@@ -124,7 +125,7 @@ class _HomePageState extends State<HomePage>
                 ),
               ),
               FutureBuilder<either.Either<Failure, RandomRecipesResponse>>(
-                future: RandomRecipeRepoImpl().getRandomRecipes(''),
+                future: RandomRecipeRepoImpl().getRandomRecipes('', 5),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return LoadingIndicator();
@@ -189,7 +190,7 @@ class _HomePageState extends State<HomePage>
           ],
           image: DecorationImage(
             alignment: Alignment.topCenter,
-            image: NetworkImage(response.image),
+            image: NetworkImage(response.image ?? placeholder_image),
             fit: BoxFit.fitWidth,
           ),
         ),

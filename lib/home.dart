@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
   final NetworkController _networkController = Get.find<NetworkController>();
   @override
   void initState() {
-    homeController.selectedIndex.value = 0;
+    // homeController.selectedIndex.value = 0;
     super.initState();
   }
 
@@ -30,21 +30,22 @@ class _HomeState extends State<Home> {
     return GetBuilder<NetworkController>(builder: (context) {
       return _networkController.connectionType == 0
           ? OfflineScreen()
-          : Scaffold(
-              body: SafeArea(
-                child: PageView(
-                  controller: homeController.pageController,
-                  onPageChanged: homeController.onPageChanged,
-                  children: [
-                    HomePage(),
-                    SearchScreen(),
-                    WishlistScreen(),
-                    ProfileScreen(),
-                  ],
+          : Obx(
+              () => Scaffold(
+                body: SafeArea(
+                  child: PageView(
+                    controller: homeController.pageController,
+                    onPageChanged: homeController.onPageChanged,
+                    children: [
+                      Container(),
+                      // HomePage(),
+                      SearchScreen(),
+                      WishlistScreen(),
+                      ProfileScreen(),
+                    ],
+                  ),
                 ),
-              ),
-              bottomNavigationBar: Obx(
-                () => BottomNavigationBar(
+                bottomNavigationBar: BottomNavigationBar(
                   currentIndex: homeController.selectedIndex.value,
                   onTap: homeController.onTap,
                   type: BottomNavigationBarType.fixed,

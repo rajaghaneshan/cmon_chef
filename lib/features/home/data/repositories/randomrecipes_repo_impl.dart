@@ -7,10 +7,10 @@ import 'package:dartz/dartz.dart';
 
 class RandomRecipeRepoImpl implements RandomRecipesRepository {
   @override
-  Future<Either<Failure, RandomRecipesResponse>> getRandomRecipes(String tags) async {
+  Future<Either<Failure, RandomRecipesResponse>> getRandomRecipes(String tags, int length) async {
     try {
       RandomRecipesResponse response =
-          await RandomRecipesDataSourceImpl().getRandomRecipes(5, tags);
+          await RandomRecipesDataSourceImpl().getRandomRecipes(length, tags);
       return Right(response);
     } on ServerException {
       return Left(ServerFailure());
