@@ -1,9 +1,8 @@
 import 'package:cmon_chef/core/app_colors.dart';
-import 'package:cmon_chef/features/recipe/presentation/recipe_screen_id.dart';
+import 'package:cmon_chef/features/recipe/presentation/pages/recipe_by_id_screen.dart';
 import 'package:cmon_chef/features/search/data/data_sources/autocompl_search_ds_impl.dart';
 import 'package:cmon_chef/features/search/data/models/autocomplete_search_response.dart';
-import 'package:cmon_chef/features/search/data/repositories/autocompl_search_repo_impl.dart';
-import 'package:cmon_chef/features/search/presentation/recipes_by_category_screen.dart';
+import 'package:cmon_chef/features/search/presentation/widgets/search_suggestions.dart';
 import 'package:flutter/material.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -80,13 +79,13 @@ class _SearchScreenState extends State<SearchScreen> {
                     Wrap(
                       direction: Axis.horizontal,
                       children: [
-                        searchSuggestions('Indian'),
-                        searchSuggestions('Chinese'),
-                        searchSuggestions('Mediterranean'),
-                        searchSuggestions('English'),
-                        searchSuggestions('French'),
-                        searchSuggestions('European'),
-                        searchSuggestions('Mexican'),
+                        searchSuggestions(context, 'Indian'),
+                        searchSuggestions(context, 'Chinese'),
+                        searchSuggestions(context, 'Mediterranean'),
+                        searchSuggestions(context, 'English'),
+                        searchSuggestions(context, 'French'),
+                        searchSuggestions(context, 'European'),
+                        searchSuggestions(context, 'Mexican'),
                       ],
                     ),
                     Padding(
@@ -99,14 +98,14 @@ class _SearchScreenState extends State<SearchScreen> {
                     Wrap(
                       direction: Axis.horizontal,
                       children: [
-                        searchSuggestions('Drink'),
-                        searchSuggestions('Soup'),
-                        searchSuggestions('Side dish'),
-                        searchSuggestions('Appetizer'),
-                        searchSuggestions('Snack'),
-                        searchSuggestions('Bread'),
-                        searchSuggestions('Dessert'),
-                        searchSuggestions('Breakfast'),
+                        searchSuggestions(context, 'Drink'),
+                        searchSuggestions(context, 'Soup'),
+                        searchSuggestions(context, 'Side dish'),
+                        searchSuggestions(context, 'Appetizer'),
+                        searchSuggestions(context, 'Snack'),
+                        searchSuggestions(context, 'Bread'),
+                        searchSuggestions(context, 'Dessert'),
+                        searchSuggestions(context, 'Breakfast'),
                       ],
                     ),
                   ],
@@ -121,7 +120,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
-                                RecipeScreenId(id: searchResults[index].id),
+                                RecipeByIdScreen(id: searchResults[index].id),
                           ),
                         );
                       },
@@ -133,39 +132,5 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget searchSuggestions(String text) {
-    return FittedBox(
-      child: InkWell(
-        splashColor: AppColors.primary,
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => RecipesByCategoryScreen(tags: text),
-            ),
-          );
-        },
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            vertical: 6.0,
-            horizontal: 10.0,
-          ),
-          margin: EdgeInsets.all(6.0),
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            border: Border.all(
-              color: AppColors.primary,
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Text(
-            text,
-            style: TextStyle(fontSize: 15),
-          ),
-        ),
-      ),
-    );
-  }
+  
 }

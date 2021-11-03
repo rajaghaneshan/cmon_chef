@@ -15,42 +15,40 @@ import 'package:dartz/dartz.dart' as either;
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 
-class RecipeScreenId extends StatefulWidget {
+class RecipeByIdScreen extends StatefulWidget {
   final int id;
-  const RecipeScreenId({
+  const RecipeByIdScreen({
     Key? key,
     required this.id,
   }) : super(key: key);
 
   @override
-  _RecipeScreenIdState createState() => _RecipeScreenIdState();
+  _RecipeByIdScreenState createState() => _RecipeByIdScreenState();
 }
 
-class _RecipeScreenIdState extends State<RecipeScreenId> {
-  late Box box;
+class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
+  late Box<Offlinerecipe> box;
   CollectionReference wishlist = FirebaseFirestore.instance
       .collection('users')
       .doc(homeController.currentUser.value!.id)
       .collection('wishlist');
   bool isWishlisted = false;
   bool isOffline = false;
+  
   @override
   void initState() {
     print('recipe ${widget.id}');
-    box = Hive.box(recipeBox);
+    box = Hive.box<Offlinerecipe>(recipeBox);
     checkRecipeInFirestore();
-    checkRecipeInOffline();
+    checkRecipeInHive();
     super.initState();
   }
 
-  checkRecipeInOffline() {
-    box.values.where((element) {
-      if (element['id'] == widget.id) {
-        setState(() {
-          isOffline = true;
-        });
-      }
-      return true;
+  checkRecipeInHive() {
+    box.values.where((element) => element.id == widget.id).forEach((element) {
+      setState(() {
+        isOffline = true;
+      });
     });
   }
 

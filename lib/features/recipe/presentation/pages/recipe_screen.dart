@@ -20,7 +20,7 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
-  late Box box;
+  late Box<Offlinerecipe> box;
   CollectionReference wishlist = FirebaseFirestore.instance
       .collection('users')
       .doc(homeController.currentUser.value!.id)
@@ -30,7 +30,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   void initState() {
-    box = Hive.box(recipeBox);
+    box = Hive.box<Offlinerecipe>(recipeBox);
     print('recipe ${widget.recipe.id}');
     checkRecipeInFirestore();
     super.initState();
@@ -45,7 +45,28 @@ class _RecipeScreenState extends State<RecipeScreen> {
     }
   }
 
-  addRecipeOffline(Recipe recipe) {
+  checkRecipeInHive() {
+    box.values
+        .where((element) => element.id == widget.recipe.id)
+        .forEach((element) {
+      setState(() {
+        isOffline = true;
+      });
+    });
+  }
+
+  removeRecipeFromHive() {
+    box.values
+        .where((element) => element.id == widget.recipe.id)
+        .forEach((element) {
+      box.delete(element);
+      setState(() {
+        isOffline = false;
+      });
+    });
+  }
+
+  addRecipeToHive(Recipe recipe) {
     box.add(
       Offlinerecipe(
         id: recipe.id,
@@ -70,7 +91,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
     });
   }
 
-  addRecipeToWishlist() async {
+  addToWishlist() async {
     wishlist.doc(widget.recipe.id.toString()).set(
       {
         'id': widget.recipe.id,
@@ -142,7 +163,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                 print('tapped $isWishlisted');
                                 isWishlisted
                                     ? removeFromWishlist()
-                                    : addRecipeToWishlist();
+                                    : addToWishlist();
                               },
                               icon: isWishlisted
                                   ? Icon(
@@ -155,7 +176,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                             ),
                             IconButton(
                               onPressed: () {
-                                addRecipeOffline(widget.recipe);
+                                addRecipeToHive(widget.recipe);
                               },
                               icon: isOffline
                                   ? Icon(

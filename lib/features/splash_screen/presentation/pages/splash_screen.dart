@@ -3,7 +3,9 @@ import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/features/home/presentation/pages/home_page.dart';
-import 'package:cmon_chef/home.dart';
+import 'package:cmon_chef/features/splash_screen/presentation/widgets/google_sign_in_button.dart';
+import 'package:cmon_chef/features/splash_screen/presentation/widgets/splash_screen_logo.dart';
+import 'package:cmon_chef/features/dashboard/presentation/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,19 +25,15 @@ class _SplashScreenState extends State<SplashScreen>
   late Animation<double> _animation;
   bool isAuth = false;
   final usersRef = FirebaseFirestore.instance.collection('users');
-
   final timestamp = DateTime.now();
   GoogleSignInAccount? currentUser;
+
   @override
   void initState() {
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 500),
     );
-    // _animation = CurvedAnimation(
-    //   parent: _animationController,
-    //   curve: Curves.easeIn,
-    // );
     _animation = Tween(end: 1.0, begin: 0.0).animate(_animationController);
 
     Future.delayed(Duration(seconds: 1), () {
@@ -114,60 +112,14 @@ class _SplashScreenState extends State<SplashScreen>
           child: Stack(
             alignment: Alignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: size.height * 0.05,
-                  ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(text: 'C'),
-                        TextSpan(
-                          text: '\'',
-                          style: TextStyle(
-                            color: AppColors.accent,
-                          ),
-                        ),
-                        TextSpan(
-                          text: 'mon',
-                        ),
-                      ],
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 80,
-                        fontFamily: 'ClementePDa',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'Chef',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 80,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
+              SplashScreenLogo(size: size),
               Positioned(
                 bottom: size.height * 0.1,
                 child: InkWell(
                   onTap: () {
                     login();
                   },
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: Image.asset(
-                      'assets/google_sign_in.png',
-                      height: 50,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: GoogleSignInButton(),
                 ),
               ),
             ],

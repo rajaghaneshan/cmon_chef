@@ -1,13 +1,11 @@
 import 'package:cmon_chef/core/app_colors.dart';
-import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/error/failures.dart';
 import 'package:cmon_chef/core/widgets/appbar_title.dart';
 import 'package:cmon_chef/core/widgets/loading_indicator.dart';
-import 'package:cmon_chef/features/home/data/data_source/random_recipes_datasrc.dart';
 import 'package:cmon_chef/features/home/data/models/random_recipes_response.dart';
 import 'package:cmon_chef/features/home/data/repositories/randomrecipes_repo_impl.dart';
-import 'package:cmon_chef/features/recipe/presentation/recipe_screen.dart';
+import 'package:cmon_chef/features/home/presentation/widgets/recipe_card.dart';
 import 'package:dartz/dartz.dart' as either;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
-  final _scrollController = ScrollController();
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -74,6 +85,7 @@ class _HomePageState extends State<HomePage>
                             itemCount: r.recipes.length,
                             itemBuilder: (BuildContext context, index) {
                               return recipeCard(
+                                context,
                                 r.recipes[index],
                               );
                             },
@@ -109,6 +121,7 @@ class _HomePageState extends State<HomePage>
                             itemCount: r.recipes.length,
                             itemBuilder: (BuildContext context, index) {
                               return recipeCard(
+                                context,
                                 r.recipes[index],
                               );
                             },
@@ -144,6 +157,7 @@ class _HomePageState extends State<HomePage>
                           itemCount: r.recipes.length,
                           itemBuilder: (BuildContext context, index) {
                             return recipeCard(
+                              context,
                               r.recipes[index],
                             );
                           },
@@ -152,67 +166,6 @@ class _HomePageState extends State<HomePage>
                     },
                   );
                 },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget recipeCard(Recipe response) {
-    return InkWell(
-      onTap: () {
-        print(response.id);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RecipeScreen(
-              recipe: response,
-            ),
-          ),
-        );
-      },
-      child: Container(
-        margin: EdgeInsets.all(6.0),
-        // height: 200,
-        width: 100,
-        alignment: Alignment.bottomLeft,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10.0),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(1, 1),
-              blurRadius: 5,
-              color: Colors.grey,
-            ),
-          ],
-          image: DecorationImage(
-            alignment: Alignment.topCenter,
-            image: NetworkImage(response.image ?? placeholder_image),
-            fit: BoxFit.fitWidth,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                response.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text(
-                '${response.readyInMinutes} mins',
               ),
             ],
           ),

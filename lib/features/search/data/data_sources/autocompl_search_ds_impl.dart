@@ -10,7 +10,7 @@ class AutocompleteSearchDataSourceImpl implements AutocompleteSearchDataSource {
   Future<List<AutocompleteSearchResponse>> getSearchList(String query) async {
     var client = http.Client();
     String url =
-        '$BASE_URL/recipes/autocomplete?query=$query&number=5&apiKey=$apiKey';
+        '$BASE_URL/recipes/autocomplete?query=$query&number=5&apiKey=$API_KEY';
     try {
       var response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {

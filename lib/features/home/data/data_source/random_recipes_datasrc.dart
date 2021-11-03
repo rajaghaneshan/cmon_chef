@@ -14,7 +14,7 @@ class RandomRecipesDataSourceImpl implements RandomRecipesDataSource {
       int length, String tags) async {
     var client = http.Client();
     String url =
-        '$BASE_URL/recipes/random?limitLicense=true&tags=$tags&number=$length&apiKey=$apiKey';
+        '$BASE_URL/recipes/random?limitLicense=true&tags=$tags&number=$length&apiKey=$API_KEY';
 
     try {
       var response = await client.get(Uri.parse(url));

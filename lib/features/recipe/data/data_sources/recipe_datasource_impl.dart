@@ -10,7 +10,7 @@ class RecipeDataSoruceImpl implements RecipeDataSource {
   Future<RecipeResponse> getRecipeInfo(int id) async {
     var client = http.Client();
     String url =
-        '$BASE_URL/recipes/$id/information?includeNutrition=false&apiKey=$apiKey';
+        '$BASE_URL/recipes/$id/information?includeNutrition=false&apiKey=$API_KEY';
 
     try {
       var response = await client.get(Uri.parse(url));

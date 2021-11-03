@@ -1,7 +1,7 @@
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/controller.dart';
-import 'package:cmon_chef/features/splash_screen/splash_screen.dart';
+import 'package:cmon_chef/features/splash_screen/presentation/pages/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProfileScreen extends StatefulWidget {

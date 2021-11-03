@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class NetworkController extends GetxController {
+  static NetworkController instance = Get.find();
   int connectionType = 0;
 
   final Connectivity _connectivity = Connectivity();

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/widgets/appbar_title.dart';
@@ -15,14 +13,25 @@ class OfflineScreen extends StatefulWidget {
 }
 
 class _OfflineScreenState extends State<OfflineScreen> {
-  late final Box box;
+  late final Box<Offlinerecipe> box;
+  final _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   void initState() {
     super.initState();
     box = Hive.box(recipeBox);
   }
 
-  final _scrollController = ScrollController();
+  removeRecipeFromHive(int index) {
+    box.deleteAt(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -58,17 +67,20 @@ class _OfflineScreenState extends State<OfflineScreen> {
                     shrinkWrap: true,
                     itemCount: value.length,
                     itemBuilder: (context, index) {
-                      Offlinerecipe currentData = box.getAt(index);
-                      print('$index ${currentData.image}');
+                      Offlinerecipe? currentData = box.getAt(index);
+                      print('$index ${currentData!.image}');
                       return ListTile(
                         title: Text(currentData.title),
                         subtitle:
                             Text('Prep time: ${currentData.readyInMinutes}'),
                         trailing: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            removeRecipeFromHive(index);
+                          },
                           child: Icon(
-                            Icons.arrow_forward_ios,
-                            size: 15,
+                            Icons.delete_outline,
+                            color: AppColors.primary,
+                            // size: 15,
                           ),
                         ),
                       );
