@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
+import 'package:cmon_chef/core/app_theme.dart';
 import 'package:cmon_chef/core/controller.dart';
+import 'package:cmon_chef/core/format_string.dart';
 import 'package:cmon_chef/core/widgets/back_button.dart';
 import 'package:cmon_chef/features/home/data/models/random_recipes_response.dart';
 import 'package:cmon_chef/features/recipe/data/models/offline_recipe.dart';
@@ -115,6 +117,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var instructionsList =
+        FormatString.formatInstructions(widget.recipe.instructions);
+    var occasions = FormatString.formatOccasions(widget.recipe.occasions);
+    var dishTypes = FormatString.formatOccasions(widget.recipe.dishTypes);
+    var diets = FormatString.formatOccasions(widget.recipe.diets);
+    var ingredients =
+        FormatString.getIngredients(widget.recipe.analyzedInstructions);
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -189,6 +198,45 @@ class _RecipeScreenState extends State<RecipeScreen> {
                             ),
                           ],
                         ),
+                        AppTheme.subHeadingText(size, 'Ingredients'),
+                        Wrap(
+                          children: ingredients
+                              .map(
+                                (e) => Container(
+                                  margin: EdgeInsets.all(4.0),
+                                  padding: EdgeInsets.all(4.0),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(
+                                        width: 2,
+                                        color: AppColors.primary,
+                                      )),
+                                  child: Text(' $e '),
+                                ),
+                              )
+                              .toList(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppTheme.subHeadingText(size, 'Instructions'),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: instructionsList
+                                    .map((e) => Text('* $e\n'))
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                        AppTheme.subHeadingText(size, 'Occasions'),
+                        Text(occasions),
+                        AppTheme.subHeadingText(size, 'Dish Types'),
+                        Text(dishTypes),
+                        AppTheme.subHeadingText(size, 'Diets'),
+                        Text(diets),
                       ],
                     ),
                   ),

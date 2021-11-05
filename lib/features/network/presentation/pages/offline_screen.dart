@@ -1,6 +1,7 @@
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/widgets/appbar_title.dart';
+import 'package:cmon_chef/features/network/presentation/pages/offline_recipe_screen.dart';
 import 'package:cmon_chef/features/recipe/data/models/offline_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -68,9 +69,20 @@ class _OfflineScreenState extends State<OfflineScreen> {
                     itemCount: value.length,
                     itemBuilder: (context, index) {
                       Offlinerecipe? currentData = box.getAt(index);
-                      print('$index ${currentData!.image}');
+                      // print('$index ${currentData!.image}');
                       return ListTile(
-                        title: Text(currentData.title),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => OfflineRecipeScreen(
+                                recipe: currentData!,
+                                index: index,
+                              ),
+                            ),
+                          );
+                        },
+                        title: Text(currentData!.title),
                         subtitle:
                             Text('Prep time: ${currentData.readyInMinutes}'),
                         trailing: InkWell(

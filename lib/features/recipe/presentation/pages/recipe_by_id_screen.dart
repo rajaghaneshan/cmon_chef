@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
+import 'package:cmon_chef/core/app_theme.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/error/failures.dart';
+import 'package:cmon_chef/core/format_string.dart';
 import 'package:cmon_chef/core/widgets/back_button.dart';
 import 'package:cmon_chef/core/widgets/loading_indicator.dart';
 import 'package:cmon_chef/features/recipe/data/models/offline_recipe.dart';
@@ -34,7 +36,7 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
       .collection('wishlist');
   bool isWishlisted = false;
   bool isOffline = false;
-  
+
   @override
   void initState() {
     print('recipe ${widget.id}');
@@ -125,6 +127,14 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
                       child: Text('Error loading API'),
                     );
                   }, (r) {
+                    var instructionsList =
+                        FormatString.formatInstructions(r.instructions);
+                    var occasions = FormatString.formatOccasions(r.occasions);
+                    var dishTypes = FormatString.formatOccasions(r.dishTypes);
+                    var diets = FormatString.formatOccasions(r.diets);
+                    var ingredients =
+                        FormatString.getIngredients(r.analyzedInstructions);
+
                     return SingleChildScrollView(
                       // controller: controller,
                       child: Column(
@@ -195,6 +205,50 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
                                     ),
                                   ],
                                 ),
+                                AppTheme.subHeadingText(size, 'Ingredients'),
+                                Wrap(
+                                  children: ingredients
+                                      .map(
+                                        (e) => Container(
+                                          margin: EdgeInsets.all(4.0),
+                                          padding: EdgeInsets.all(4.0),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5.0),
+                                              border: Border.all(
+                                                width: 2,
+                                                color: AppColors.primary,
+                                              )),
+                                          child: Text(' $e '),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      AppTheme.subHeadingText(
+                                          size, 'Instructions'),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: instructionsList
+                                            .map((e) => Text('* $e\n'))
+                                            .toList(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                AppTheme.subHeadingText(size, 'Occasions'),
+                                Text(occasions),
+                                AppTheme.subHeadingText(size, 'Dish Types'),
+                                Text(dishTypes),
+                                AppTheme.subHeadingText(size, 'Diets'),
+                                Text(diets),
                               ],
                             ),
                           ),

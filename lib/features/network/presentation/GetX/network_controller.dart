@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -33,6 +34,12 @@ class NetworkController extends GetxController {
     switch (result) {
       case ConnectivityResult.wifi:
         connectionType = 1;
+        Get.snackbar(
+          'Back Online',
+          'You are connected to WiFi',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.shade300,
+        );
         update();
         break;
       case ConnectivityResult.mobile:
@@ -41,6 +48,12 @@ class NetworkController extends GetxController {
         break;
       case ConnectivityResult.none:
         connectionType = 0;
+        Get.snackbar(
+          'No Internet',
+          'You can view recipes stored offline!',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red.shade300,
+        );
         update();
         break;
       default:

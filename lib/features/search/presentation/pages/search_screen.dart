@@ -12,13 +12,15 @@ class SearchScreen extends StatefulWidget {
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchScreenState extends State<SearchScreen>
+    with AutomaticKeepAliveClientMixin {
   final TextEditingController _searchController = TextEditingController();
   String searchQuery = '';
   List<AutocompleteSearchResponse> searchResults = [];
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var size = MediaQuery.of(context).size;
     var textStyle = TextStyle(
       fontWeight: FontWeight.w500,
@@ -132,5 +134,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  
+  @override
+  bool get wantKeepAlive => true;
 }
