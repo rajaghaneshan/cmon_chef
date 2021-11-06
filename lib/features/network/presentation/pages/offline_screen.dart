@@ -62,7 +62,7 @@ class _OfflineScreenState extends State<OfflineScreen> {
               ValueListenableBuilder(
                 valueListenable: box.listenable(),
                 builder: (BuildContext context, Box value, _) {
-                  if (value.isNotEmpty) {
+                  if (value.isEmpty) {
                     return EmptyDownloadsScreen(size: size);
                   }
                   return ListView.builder(

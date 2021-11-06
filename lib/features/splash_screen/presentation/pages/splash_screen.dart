@@ -8,6 +8,7 @@ import 'package:cmon_chef/features/dashboard/presentation/pages/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -30,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration:const  Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
     );
     _animation = Tween(end: 1.0, begin: 0.0).animate(_animationController);
 
@@ -40,6 +41,13 @@ class _SplashScreenState extends State<SplashScreen>
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account);
     }, onError: (err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            err.toString(),
+          ),
+        ),
+      );
       // print('Error signing in: $err');
     });
     googleSignIn.signInSilently(suppressErrors: false).then((account) {
@@ -90,7 +98,18 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   login() {
-    googleSignIn.signIn();
+    googleSignIn.signIn().catchError((err) {
+      if (err is PlatformException) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.red,
+            content: Text(
+              err.code.toString(),
+            ),
+          ),
+        );
+      }
+    });
   }
 
   logout() {
@@ -117,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen>
                   onTap: () {
                     login();
                   },
-                  child:const  GoogleSignInButton(),
+                  child: const GoogleSignInButton(),
                 ),
               ),
             ],
