@@ -1,5 +1,6 @@
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/app_urls.dart';
+import 'package:cmon_chef/core/error/exceptions.dart';
 import 'package:cmon_chef/features/home/data/models/random_recipes_response.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,17 +21,17 @@ class RandomRecipesDataSourceImpl implements RandomRecipesDataSource {
       var response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {
         var jsonString = response.body;
-        print(jsonString);
+        // print(jsonString);
         RandomRecipesResponse randomRecipesResponse =
             randomRecipesResponseFromJson(jsonString);
         return randomRecipesResponse;
       } else {
-        print(response.statusCode.toString());
-        throw UnimplementedError();
+        // print(response.statusCode.toString());
+        throw ServerException();
       }
     } catch (e) {
-      print(e.toString());
-      throw UnimplementedError();
+      // print(e.toString());
+      throw ServerException();
     }
   }
 }

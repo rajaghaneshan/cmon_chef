@@ -56,7 +56,7 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
                   Container(
                     width: double.infinity,
                     height: 200,
-                    decoration: BoxDecoration(
+                    decoration:const  BoxDecoration(
                       color: Colors.green,
                       image: DecorationImage(
                         image: AssetImage(recipeImage),
@@ -83,11 +83,11 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
                             children: [
                               Row(
                                 children: [
-                                  Icon(Icons.watch_later_outlined),
+                                  const Icon(Icons.watch_later_outlined),
                                   Text(' ${widget.recipe.readyInMinutes} mins'),
                                 ],
                               ),
-                              Spacer(),
+                              const Spacer(),
                               //
                               IconButton(
                                 onPressed: () {
@@ -95,7 +95,7 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
                                     deleteBottomSheet(size, context),
                                   );
                                 },
-                                icon: Icon(
+                                icon:const  Icon(
                                   Icons.download_done_rounded,
                                   color: Colors.green,
                                 ),
@@ -108,8 +108,8 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
                           children: ingredients
                               .map(
                                 (e) => Container(
-                                  margin: EdgeInsets.all(4.0),
-                                  padding: EdgeInsets.all(4.0),
+                                  margin:const  EdgeInsets.all(4.0),
+                                  padding: const EdgeInsets.all(4.0),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5.0),
                                       border: Border.all(
@@ -148,7 +148,7 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
                 ],
               ),
             ),
-            CustomBackButton(),
+            const CustomBackButton(),
           ],
         ),
       ),
@@ -159,7 +159,7 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
     return Container(
       height: size.height * 0.3,
       padding: EdgeInsets.all(size.width * 0.1),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
@@ -186,13 +186,13 @@ class _OfflineRecipeScreenState extends State<OfflineRecipeScreen> {
                   Navigator.pop(context);
                   Navigator.pop(context);
                 },
-                child: Text('Yes, Remove'),
+                child:const  Text('Yes, Remove'),
               ),
               TextButton(
                 onPressed: () {
                   Get.back();
                 },
-                child: Text(
+                child: const Text(
                   'No, Cancel',
                   style: TextStyle(
                     color: AppColors.black,

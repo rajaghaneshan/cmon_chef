@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/widgets/loading_indicator.dart';
-import 'package:cmon_chef/features/recipe/presentation/pages/recipe_by_id_screen.dart';
+import 'package:cmon_chef/features/wishlist/presentation/widgets/empty_wishlist_screen.dart';
 import 'package:cmon_chef/features/wishlist/presentation/widgets/wishlist_card.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +22,7 @@ class _WishlistScreenState extends State<WishlistScreen>
     return Scaffold(
       body: SingleChildScrollView(
         controller: _scrollController,
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Padding(
           padding:
               EdgeInsets.symmetric(horizontal: size.width * 0.02, vertical: 20),
@@ -37,7 +36,7 @@ class _WishlistScreenState extends State<WishlistScreen>
                   style: Theme.of(context).textTheme.headline5,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               StreamBuilder<QuerySnapshot>(
@@ -49,23 +48,27 @@ class _WishlistScreenState extends State<WishlistScreen>
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return LoadingIndicator();
+                      return const LoadingIndicator();
                     }
-                    return GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: size.width * 0.03,
-                        mainAxisSpacing: size.width * 0.03,
-                        childAspectRatio: 0.9,
-                      ),
-                      itemCount: snapshot.data!.docs.length,
-                      controller: _scrollController,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        var data = snapshot.data!.docs[index];
-                        return wishlistCard(context, data);
-                      },
-                    );
+                    if (snapshot.data!.docs.isNotEmpty) {
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: size.width * 0.03,
+                          mainAxisSpacing: size.width * 0.03,
+                          childAspectRatio: 0.9,
+                        ),
+                        itemCount: snapshot.data!.docs.length,
+                        controller: _scrollController,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          var data = snapshot.data!.docs[index];
+                          return wishlistCard(context, data);
+                        },
+                      );
+                    } else {
+                      return EmptyWishlistScreen(size: size);
+                    }
                   }),
             ],
           ),
@@ -77,3 +80,4 @@ class _WishlistScreenState extends State<WishlistScreen>
   @override
   bool get wantKeepAlive => true;
 }
+

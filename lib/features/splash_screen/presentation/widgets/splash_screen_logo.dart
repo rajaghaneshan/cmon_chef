@@ -19,7 +19,7 @@ class SplashScreenLogo extends StatelessWidget {
         ),
         RichText(
           textAlign: TextAlign.center,
-          text: TextSpan(
+          text: const TextSpan(
             children: [
               TextSpan(text: 'C'),
               TextSpan(
@@ -40,7 +40,7 @@ class SplashScreenLogo extends StatelessWidget {
             ),
           ),
         ),
-        Text(
+       const  Text(
           'Chef',
           textAlign: TextAlign.center,
           style: TextStyle(

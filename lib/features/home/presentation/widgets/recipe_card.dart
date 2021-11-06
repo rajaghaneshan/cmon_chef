@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 Widget recipeCard(BuildContext context, Recipe response) {
     return InkWell(
       onTap: () {
-        print(response.id);
+        // print(response.id);
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -17,14 +17,14 @@ Widget recipeCard(BuildContext context, Recipe response) {
         );
       },
       child: Container(
-        margin: EdgeInsets.all(6.0),
+        margin:const  EdgeInsets.all(6.0),
         // height: 200,
         width: 100,
         alignment: Alignment.bottomLeft,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(1, 1),
               blurRadius: 5,
@@ -45,13 +45,13 @@ Widget recipeCard(BuildContext context, Recipe response) {
             children: [
               Text(
                 response.title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(

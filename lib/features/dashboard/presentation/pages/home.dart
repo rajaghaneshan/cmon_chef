@@ -1,4 +1,3 @@
-import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/features/dashboard/presentation/widgets/bottom_nav_bar.dart';
 import 'package:cmon_chef/features/network/presentation/GetX/network_controller.dart';
@@ -22,31 +21,33 @@ class _HomeState extends State<Home> {
   final NetworkController _networkController = Get.find<NetworkController>();
   @override
   void initState() {
-    // homeController.selectedIndex.value = 0;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NetworkController>(builder: (context) {
-      return _networkController.connectionType == 0
-          ? OfflineScreen()
-          : Scaffold(
-              body: SafeArea(
-                child: PageView(
-                  controller: homeController.pageController,
-                  onPageChanged: homeController.onPageChanged,
-                  children: [
-                    Container(),
-                    // HomePage(),
-                    SearchScreen(),
-                    WishlistScreen(),
-                    ProfileScreen(),
-                  ],
+    return GetBuilder<NetworkController>(
+      builder: (context) {
+        return _networkController.connectionType == 0
+            ? const OfflineScreen()
+            : Scaffold(
+                body: SafeArea(
+                  child: PageView(
+                    controller: homeController.pageController,
+                    onPageChanged: homeController.onPageChanged,
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: const [
+                      // Container(),
+                      HomePage(),
+                      SearchScreen(),
+                      WishlistScreen(),
+                      ProfileScreen(),
+                    ],
+                  ),
                 ),
-              ),
-              bottomNavigationBar: BottomNavBar(),
-            );
-    });
+                bottomNavigationBar: const BottomNavBar(),
+              );
+      },
+    );
   }
 }

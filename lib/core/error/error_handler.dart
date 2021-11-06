@@ -22,7 +22,7 @@ class ErrorHandler
 
 void showSnackBar(BuildContext context,String message) {
   final snackBar = SnackBar(
-    duration: Duration(seconds: 2),
+    duration: const Duration(seconds: 2),
     content: Text(
       message,
       textAlign: TextAlign.left,

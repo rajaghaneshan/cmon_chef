@@ -6,7 +6,7 @@ class AppTheme {
       padding: EdgeInsets.symmetric(vertical: size.width * 0.02),
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),

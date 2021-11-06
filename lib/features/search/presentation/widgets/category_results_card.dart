@@ -17,12 +17,12 @@ Widget categoryResultsCard(BuildContext context, Recipe data) {
         );
       },
       child: Container(
-        margin: EdgeInsets.all(2),
+        margin: const EdgeInsets.all(2),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.0),
           border: Border.all(width: 0.5, color: AppColors.accent),
-          boxShadow: [
+          boxShadow:const  [
             BoxShadow(
               offset: Offset(1, 2),
               color: AppColors.accent,
@@ -37,7 +37,7 @@ Widget categoryResultsCard(BuildContext context, Recipe data) {
               height: 130,
               decoration: BoxDecoration(
                 color: Colors.green,
-                borderRadius: BorderRadius.only(
+                borderRadius:const  BorderRadius.only(
                   topLeft: Radius.circular(10.0),
                   topRight: Radius.circular(10.0),
                 ),

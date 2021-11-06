@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
@@ -24,8 +26,9 @@ class NetworkController extends GetxController {
     var connectivityResult;
     try {
       connectivityResult = await _connectivity.checkConnectivity();
+    // ignore: unused_catch_clause
     } on PlatformException catch (e) {
-      print(e);
+      // print(e);
     }
     return _updateState(connectivityResult);
   }
@@ -34,12 +37,6 @@ class NetworkController extends GetxController {
     switch (result) {
       case ConnectivityResult.wifi:
         connectionType = 1;
-        Get.snackbar(
-          'Back Online',
-          'You are connected to WiFi',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green.shade300,
-        );
         update();
         break;
       case ConnectivityResult.mobile:

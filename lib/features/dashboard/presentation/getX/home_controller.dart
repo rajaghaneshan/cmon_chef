@@ -22,7 +22,7 @@ class HomeController extends GetxController {
   void onTap(int index) {
     pageController.animateToPage(
       index,
-      duration: Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 150),
       curve: Curves.easeIn,
     );
   }

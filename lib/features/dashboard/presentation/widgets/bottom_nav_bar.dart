@@ -23,12 +23,13 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Obx(
       () => BottomNavigationBar(
+        elevation: 0,
         currentIndex: homeController.selectedIndex.value,
         onTap: homeController.onTap,
         type: BottomNavigationBarType.fixed,
         backgroundColor: AppColors.white,
         selectedItemColor: AppColors.primary,
-        items: [
+        items: const [
           BottomNavigationBarItem(
               icon: Icon(
                 Icons.restaurant_menu,

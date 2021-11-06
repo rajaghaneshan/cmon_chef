@@ -2,6 +2,7 @@ import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/error/failures.dart';
 import 'package:cmon_chef/core/widgets/appbar_title.dart';
+import 'package:cmon_chef/core/widgets/error_screen.dart';
 import 'package:cmon_chef/core/widgets/loading_indicator.dart';
 import 'package:cmon_chef/features/home/data/models/random_recipes_response.dart';
 import 'package:cmon_chef/features/home/data/repositories/randomrecipes_repo_impl.dart';
@@ -69,11 +70,11 @@ class _HomePageState extends State<HomePage>
                   future: RandomRecipeRepoImpl().getRandomRecipes('indian', 5),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return LoadingIndicator();
+                      return const LoadingIndicator();
                     }
                     return snapshot.data!.fold(
                       (l) {
-                        return Text('API error');
+                        return const ErrorScreen();
                       },
                       (r) {
                         return SizedBox(
@@ -105,11 +106,11 @@ class _HomePageState extends State<HomePage>
                   future: RandomRecipeRepoImpl().getRandomRecipes('snack', 5),
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) {
-                      return LoadingIndicator();
+                      return const LoadingIndicator();
                     }
                     return snapshot.data!.fold(
                       (l) {
-                        return Text('API error');
+                        return const Center(child: Text('API error'));
                       },
                       (r) {
                         return SizedBox(
@@ -141,11 +142,11 @@ class _HomePageState extends State<HomePage>
                 future: RandomRecipeRepoImpl().getRandomRecipes('', 5),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
-                    return LoadingIndicator();
+                    return const LoadingIndicator();
                   }
                   return snapshot.data!.fold(
                     (l) {
-                      return Text('API error');
+                      return const Center(child: Text('API error'));
                     },
                     (r) {
                       return SizedBox(

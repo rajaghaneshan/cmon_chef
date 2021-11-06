@@ -16,6 +16,7 @@ Future<void> main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(OfflinerecipeAdapter());
   await Hive.openBox<Offlinerecipe>(recipeBox);
+  await Hive.openBox('user');
   await Firebase.initializeApp();
   Get.put(HomeController());
   runApp(const MyApp());
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
+      const SystemUiOverlayStyle(
         statusBarColor: AppColors.primary,
         statusBarIconBrightness: Brightness.light,
         systemNavigationBarColor: AppColors.primary,
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       initialBinding: NetworkBinding(),
       theme: ThemeData(
-        textTheme: TextTheme(),
+        textTheme: const TextTheme(),
+        scaffoldBackgroundColor: AppColors.white,
         primaryColor: AppColors.primary,
       ),
       home: const SplashScreen(),

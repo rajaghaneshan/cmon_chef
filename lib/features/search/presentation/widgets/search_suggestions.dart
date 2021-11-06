@@ -15,11 +15,11 @@ Widget searchSuggestions(BuildContext context, String text) {
           );
         },
         child: Container(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 6.0,
             horizontal: 10.0,
           ),
-          margin: EdgeInsets.all(6.0),
+          margin: const EdgeInsets.all(6.0),
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: AppColors.white,
@@ -31,7 +31,7 @@ Widget searchSuggestions(BuildContext context, String text) {
           ),
           child: Text(
             text,
-            style: TextStyle(fontSize: 15),
+            style: const TextStyle(fontSize: 15),
           ),
         ),
       ),

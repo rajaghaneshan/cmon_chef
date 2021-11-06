@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: AppBar(
         backgroundColor: AppColors.primary,
         elevation: 0,
-        title: Text('Profile'),
+        title:const  Text('Profile'),
         centerTitle: true,
       ),
       body: Column(
@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               Expanded(
                 child: Container(
                   height: 80,
-                  padding: EdgeInsets.only(left: 10.0),
+                  padding:const  EdgeInsets.only(left: 10.0),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -61,13 +61,13 @@ class _ProfileScreenState extends State<ProfileScreen>
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => SplashScreen(),
+                    builder: (context) => const SplashScreen(),
                   ),
                 );
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
-                children: [
+                children:const  [
                   Icon(
                     Icons.logout,
                     color: Colors.red,

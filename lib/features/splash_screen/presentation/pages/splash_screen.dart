@@ -2,11 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/controller.dart';
-import 'package:cmon_chef/features/home/presentation/pages/home_page.dart';
 import 'package:cmon_chef/features/splash_screen/presentation/widgets/google_sign_in_button.dart';
 import 'package:cmon_chef/features/splash_screen/presentation/widgets/splash_screen_logo.dart';
 import 'package:cmon_chef/features/dashboard/presentation/pages/home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -32,22 +30,22 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 500),
+      duration:const  Duration(milliseconds: 500),
     );
     _animation = Tween(end: 1.0, begin: 0.0).animate(_animationController);
 
-    Future.delayed(Duration(seconds: 1), () {
-      _animationController.forward().then((value) {});
+    Future.delayed(const Duration(seconds: 1), () {
+      _animationController.forward();
     });
     googleSignIn.onCurrentUserChanged.listen((account) {
       handleSignIn(account);
     }, onError: (err) {
-      print('Error signing in: $err');
+      // print('Error signing in: $err');
     });
     googleSignIn.signInSilently(suppressErrors: false).then((account) {
       handleSignIn(account);
     }).catchError((err) {
-      print('Error signing in: $err');
+      // print('Error signing in: $err');
     });
 
     super.initState();
@@ -63,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => Home(),
+              builder: (context) => const Home(),
             ),
           );
         });
@@ -119,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen>
                   onTap: () {
                     login();
                   },
-                  child: GoogleSignInButton(),
+                  child:const  GoogleSignInButton(),
                 ),
               ),
             ],

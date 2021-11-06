@@ -22,7 +22,7 @@ class _SearchScreenState extends State<SearchScreen>
   Widget build(BuildContext context) {
     super.build(context);
     var size = MediaQuery.of(context).size;
-    var textStyle = TextStyle(
+    var textStyle = const TextStyle(
       fontWeight: FontWeight.w500,
       fontSize: 16,
     );
@@ -31,7 +31,7 @@ class _SearchScreenState extends State<SearchScreen>
         backgroundColor: AppColors.white,
         title: TextField(
           controller: _searchController,
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: 'Search..',
             border: InputBorder.none,
           ),
@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen>
             setState(() {
               searchResults = result;
             });
-            print(result);
+            // print(result);
           },
         ),
         actions: [
@@ -54,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen>
                 searchResults.clear();
               });
             },
-            icon: Icon(
+            icon:const  Icon(
               Icons.clear,
               color: AppColors.primary,
             ),
@@ -72,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      padding:const  EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
                         'Search by Cuisines',
                         style: textStyle,
@@ -87,11 +87,11 @@ class _SearchScreenState extends State<SearchScreen>
                         searchSuggestions(context, 'English'),
                         searchSuggestions(context, 'French'),
                         searchSuggestions(context, 'European'),
-                        searchSuggestions(context, 'Mexican'),
+                        searchSuggestions(context, 'Spanish'),
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
                         'Search by Meal Type',
                         style: textStyle,

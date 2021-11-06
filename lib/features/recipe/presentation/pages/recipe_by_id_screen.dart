@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
@@ -8,6 +6,7 @@ import 'package:cmon_chef/core/controller.dart';
 import 'package:cmon_chef/core/error/failures.dart';
 import 'package:cmon_chef/core/format_string.dart';
 import 'package:cmon_chef/core/widgets/back_button.dart';
+import 'package:cmon_chef/core/widgets/error_screen.dart';
 import 'package:cmon_chef/core/widgets/loading_indicator.dart';
 import 'package:cmon_chef/features/recipe/data/models/offline_recipe.dart';
 import 'package:cmon_chef/features/recipe/data/models/recipe_response.dart';
@@ -15,7 +14,6 @@ import 'package:cmon_chef/features/recipe/data/repositories/recipe_repo_impl.dar
 import 'package:flutter/material.dart';
 import 'package:dartz/dartz.dart' as either;
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:http/http.dart' as http;
 
 class RecipeByIdScreen extends StatefulWidget {
   final int id;
@@ -39,7 +37,7 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
 
   @override
   void initState() {
-    print('recipe ${widget.id}');
+    // print('recipe ${widget.id}');
     box = Hive.box<Offlinerecipe>(recipeBox);
     checkRecipeInFirestore();
     checkRecipeInHive();
@@ -96,8 +94,6 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
         'photoUrl': recipe.image,
         'timestamp': DateTime.now(),
       },
-    ).then(
-      (value) => print('added to firestore'),
     );
     checkRecipeInFirestore();
   }
@@ -117,16 +113,16 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
         child: Stack(
           children: [
             FutureBuilder<either.Either<Failure, RecipeResponse>>(
-                future: RecipeRepoImpl().getRecipe(widget.id),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return LoadingIndicator();
-                  }
-                  return snapshot.data!.fold((l) {
-                    return Center(
-                      child: Text('Error loading API'),
-                    );
-                  }, (r) {
+              future: RecipeRepoImpl().getRecipe(widget.id),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const LoadingIndicator();
+                }
+                return snapshot.data!.fold(
+                  (l) {
+                    return const ErrorScreen();
+                  },
+                  (r) {
                     var instructionsList =
                         FormatString.formatInstructions(r.instructions);
                     var occasions = FormatString.formatOccasions(r.occasions);
@@ -169,24 +165,24 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
                                   children: [
                                     Row(
                                       children: [
-                                        Icon(Icons.watch_later_outlined),
+                                        const Icon(Icons.watch_later_outlined),
                                         Text(' ${r.readyInMinutes} mins'),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     IconButton(
                                       onPressed: () {
-                                        print('tapped $isWishlisted');
+                                        // print('tapped $isWishlisted');
                                         isWishlisted
                                             ? removeFromWishlist()
                                             : addRecipeToWishlist(r);
                                       },
                                       icon: isWishlisted
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.favorite,
                                               color: AppColors.primary,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               Icons.favorite_border_outlined,
                                             ),
                                     ),
@@ -195,11 +191,11 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
                                         addRecipeOffline(r);
                                       },
                                       icon: isOffline
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.download_done_rounded,
                                               color: Colors.green,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               Icons.download_outlined,
                                             ),
                                     ),
@@ -210,8 +206,8 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
                                   children: ingredients
                                       .map(
                                         (e) => Container(
-                                          margin: EdgeInsets.all(4.0),
-                                          padding: EdgeInsets.all(4.0),
+                                          margin: const EdgeInsets.all(4.0),
+                                          padding: const EdgeInsets.all(4.0),
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(5.0),
@@ -255,9 +251,11 @@ class _RecipeByIdScreenState extends State<RecipeByIdScreen> {
                         ],
                       ),
                     );
-                  });
-                }),
-            CustomBackButton(),
+                  },
+                );
+              },
+            ),
+            const CustomBackButton(),
           ],
         ),
       ),

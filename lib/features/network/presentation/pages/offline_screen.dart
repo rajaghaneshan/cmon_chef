@@ -2,6 +2,7 @@ import 'package:cmon_chef/core/app_colors.dart';
 import 'package:cmon_chef/core/app_constants.dart';
 import 'package:cmon_chef/core/widgets/appbar_title.dart';
 import 'package:cmon_chef/features/network/presentation/pages/offline_recipe_screen.dart';
+import 'package:cmon_chef/features/network/presentation/widgets/empty_downloads_screen.dart';
 import 'package:cmon_chef/features/recipe/data/models/offline_recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -55,14 +56,14 @@ class _OfflineScreenState extends State<OfflineScreen> {
                 'You\'re Offline',
                 style: Theme.of(context).textTheme.headline5,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ValueListenableBuilder(
                 valueListenable: box.listenable(),
                 builder: (BuildContext context, Box value, _) {
-                  if (value.isEmpty) {
-                    return Center(child: Text('No recipe avaialable offline'));
+                  if (value.isNotEmpty) {
+                    return EmptyDownloadsScreen(size: size);
                   }
                   return ListView.builder(
                     shrinkWrap: true,
@@ -89,7 +90,7 @@ class _OfflineScreenState extends State<OfflineScreen> {
                           onTap: () {
                             removeRecipeFromHive(index);
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.delete_outline,
                             color: AppColors.primary,
                             // size: 15,

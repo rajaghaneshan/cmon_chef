@@ -15,16 +15,16 @@ class AutocompleteSearchDataSourceImpl implements AutocompleteSearchDataSource {
       var response = await client.get(Uri.parse(url));
       if (response.statusCode == 200) {
         var jsonString = response.body;
-        print(jsonString);
+        // print(jsonString);
         List<AutocompleteSearchResponse> autoCompleteSearchResponse =
             autocompleteSearchResponseFromJson(jsonString);
         return autoCompleteSearchResponse;
       } else {
-        print(response.statusCode.toString());
+        // print(response.statusCode.toString());
         throw ServerException();
       }
     } catch (e) {
-      print(e.toString());
+      // print(e.toString());
       throw ServerException();
     }
   }

@@ -33,7 +33,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   @override
   void initState() {
     box = Hive.box<Offlinerecipe>(recipeBox);
-    print('recipe ${widget.recipe.id}');
+    // print('recipe ${widget.recipe.id}');
     checkRecipeInFirestore();
     super.initState();
   }
@@ -101,8 +101,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
         'photoUrl': widget.recipe.image,
         'timestamp': DateTime.now(),
       },
-    ).then(
-      (value) => print('added to firestore'),
     );
     checkRecipeInFirestore();
   }
@@ -162,24 +160,24 @@ class _RecipeScreenState extends State<RecipeScreen> {
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.watch_later_outlined),
+                                const Icon(Icons.watch_later_outlined),
                                 Text(' ${widget.recipe.readyInMinutes} mins'),
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                             IconButton(
                               onPressed: () {
-                                print('tapped $isWishlisted');
+                                // print('tapped $isWishlisted');
                                 isWishlisted
                                     ? removeFromWishlist()
                                     : addToWishlist();
                               },
                               icon: isWishlisted
-                                  ? Icon(
+                                  ? const Icon(
                                       Icons.favorite,
                                       color: AppColors.primary,
                                     )
-                                  : Icon(
+                                  : const Icon(
                                       Icons.favorite_border_outlined,
                                     ),
                             ),
@@ -188,11 +186,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                 addRecipeToHive(widget.recipe);
                               },
                               icon: isOffline
-                                  ? Icon(
+                                  ? const Icon(
                                       Icons.download_done_rounded,
                                       color: Colors.green,
                                     )
-                                  : Icon(
+                                  : const Icon(
                                       Icons.download_outlined,
                                     ),
                             ),
@@ -203,8 +201,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                           children: ingredients
                               .map(
                                 (e) => Container(
-                                  margin: EdgeInsets.all(4.0),
-                                  padding: EdgeInsets.all(4.0),
+                                  margin: const EdgeInsets.all(4.0),
+                                  padding: const EdgeInsets.all(4.0),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5.0),
                                       border: Border.all(
@@ -243,7 +241,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 ],
               ),
             ),
-            CustomBackButton(),
+            const CustomBackButton(),
           ],
         ),
       ),

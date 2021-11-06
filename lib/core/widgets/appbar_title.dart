@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 RichText appBarTitleText() {
   return RichText(
-    text: TextSpan(
+    text: const TextSpan(
       children: [
         TextSpan(text: 'C'),
         TextSpan(

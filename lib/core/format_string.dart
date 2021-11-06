@@ -24,7 +24,7 @@ class FormatString {
         });
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
     return ingredients.toSet().toList();
   }
